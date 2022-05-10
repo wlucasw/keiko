@@ -27,7 +27,7 @@ const pokemonList = [
 ]
 
 function filterPokemonsByName(pokemons: Pokemon[], name: string) {
-  return pokemons.filter(word => word.name.includes(name))
+  return pokemons.filter(pokemon => pokemon.name.toUpperCase().includes(name.toUpperCase()))
 }
 
 export const Home = () => {
