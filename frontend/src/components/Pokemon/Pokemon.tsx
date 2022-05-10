@@ -1,10 +1,9 @@
-interface Props {
+export interface pokemonProps {
   name: string
   id: number
-  key: number
 }
 
-export const Pokemon = ({ name, id }: Props) => {
+export const Pokemon = ({ name, id }: pokemonProps) => {
   return (
     <div>
       <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`} />
