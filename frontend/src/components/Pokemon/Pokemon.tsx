@@ -1,7 +1,6 @@
 export interface pokemonProps {
   name: string
   id: number
-  key: number
 }
 
 export const Pokemon = ({ name, id }: pokemonProps) => {
