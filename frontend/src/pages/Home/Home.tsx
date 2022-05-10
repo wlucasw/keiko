@@ -34,7 +34,6 @@ export const Home = () => {
   const [pokemonFilterValue, setPokemonFilterValue] = React.useState("")
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
     setPokemonFilterValue(event.target.value)
   }
 
