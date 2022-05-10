@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
 import { Pokemon } from "../../components/Pokemon"
-import { pokemonProps } from "../../components/Pokemon"
+import { Props as PokemonProps } from "../../components/Pokemon"
 import styles from "./Home.module.css"
 
-function filterPokemonsByName(pokemons: pokemonProps[], name: string) {
+function filterPokemonsByName(pokemons: PokemonProps[], name: string) {
   return pokemons.filter(pokemon => pokemon.name.toUpperCase().includes(name.toUpperCase()))
 }
 
