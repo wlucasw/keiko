@@ -16,7 +16,7 @@ function fetchPokemons() {
 export const Home = () => {
   const [pokemonFilterValue, setPokemonFilterValue] = React.useState("")
 
-  const [pokemonList, updatePokemonList] = React.useState<pokemonProps[]>([])
+  const [pokemonList, updatePokemonList] = React.useState<PokemonProps[]>([])
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPokemonFilterValue(event.target.value)
