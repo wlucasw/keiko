@@ -1,11 +1,7 @@
 import React from "react"
 import { Pokemon } from "../../components/Pokemon"
+import { pokemonProps } from "../../components/Pokemon"
 import styles from "./Home.module.css"
-
-interface Pokemon {
-  name: string
-  id: number
-}
 
 const pokemonList = [
   {
@@ -26,7 +22,7 @@ const pokemonList = [
   },
 ]
 
-function filterPokemonsByName(pokemons: Pokemon[], name: string) {
+function filterPokemonsByName(pokemons: pokemonProps[], name: string) {
   return pokemons.filter(pokemon => pokemon.name.toUpperCase().includes(name.toUpperCase()))
 }
 
