@@ -1,3 +1,5 @@
+import styles from "./Pokemon.module.css"
+
 export interface Props {
   name: string
   id: number
@@ -7,12 +9,12 @@ export interface Props {
 
 export const Pokemon = ({ name, id, height, weight }: Props) => {
   return (
-    <div>
+    <div className={styles.pokemonCard}>
+      <p>{name}</p>
       <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`} />
-      <p>Name : {name}</p>
-      <p>Numéro : {id}</p>
-      <p>Taille : {height}</p>
-      <p>Poids : {weight}</p>
+      <p>Id : {id}</p>
+      <p>Taille : {height} cm</p>
+      <p>Poids : {weight} kg</p>
     </div>
   )
 }
