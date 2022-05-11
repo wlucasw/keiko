@@ -7,10 +7,10 @@ function filterPokemonsByName(pokemons: PokemonProps[], name: string) {
   return pokemons.filter(pokemon => pokemon.name.toUpperCase().includes(name.toUpperCase()))
 }
 
-function fetchPokemons() {
-  return fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } }).then(response =>
-    response.json(),
-  )
+async function fetchPokemons() {
+  const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
+  const pokeData = response.json()
+  return pokeData
 }
 
 export const Home = () => {
@@ -23,7 +23,11 @@ export const Home = () => {
   }
 
   useEffect(() => {
-    fetchPokemons().then(pokemonData => updatePokemonList(pokemonData))
+    const fetchData = async () => {
+      const pokemonData = await fetchPokemons()
+      updatePokemonList(pokemonData)
+    }
+    fetchData()
   }, [pokemonFilterValue])
 
   return (
