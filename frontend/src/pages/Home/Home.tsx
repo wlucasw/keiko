@@ -9,8 +9,8 @@ function filterPokemonsByName(pokemons: PokemonProps[], name: string) {
 
 async function fetchPokemons() {
   const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
-  const pokeData = response.json()
-  return pokeData
+  const pokemonData = response.json()
+  return pokemonData
 }
 
 export const Home = () => {
