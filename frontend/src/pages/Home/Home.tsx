@@ -21,7 +21,9 @@ export const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const pokemonData = await fetchPokemons()
+
       isLoading.current = false
+
       updatePokemonList(pokemonData)
     }
     fetchData()
