@@ -1,5 +1,14 @@
-.intro {
+.cardBoard {
   font-size: 20px;
+  display: flex;
+  align-self: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.title {
+  font-size: 35px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   flex-direction: column;

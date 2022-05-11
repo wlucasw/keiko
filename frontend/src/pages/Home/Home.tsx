@@ -9,18 +9,12 @@ function filterPokemonsByName(pokemons: PokemonProps[], name: string) {
 
 async function fetchPokemons() {
   const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
-  const pokeData = response.json()
-  return pokeData
+  const pokemonData = response.json()
+  return pokemonData
 }
 
 export const Home = () => {
-  const [pokemonFilterValue, setPokemonFilterValue] = React.useState("")
-
   const [pokemonList, updatePokemonList] = React.useState<PokemonProps[]>([])
-
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPokemonFilterValue(event.target.value)
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,15 +22,16 @@ export const Home = () => {
       updatePokemonList(pokemonData)
     }
     fetchData()
-  }, [pokemonFilterValue])
+  }, [])
 
   return (
-    <div className={styles.intro}>
-      <div>Bienvenue sur ton futur pokédex !</div>
-      <div>Tu vas pouvoir apprendre tout ce qu'il faut sur React et attraper des pokemons !</div>
-      <input className={styles.input} onChange={onInputChange} value={pokemonFilterValue} />
-      <div>
-        {filterPokemonsByName(pokemonList, pokemonFilterValue).map(({ name, id, height, weight }) => {
+    <div>
+      <div className={styles.title}>
+        <div>Pokedex</div>
+      </div>
+
+      <div className={styles.cardBoard}>
+        {pokemonList.map(({ name, id, height, weight }) => {
           return <Pokemon name={name} id={id} height={height} weight={weight} key={id} />
         })}
       </div>
