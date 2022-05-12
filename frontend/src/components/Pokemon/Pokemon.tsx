@@ -12,7 +12,6 @@ export const Pokemon = ({ name, id, height, weight }: Props) => {
   return (
     <div className={styles.pokemonCard}>
       <Link to={`/pokemon/${id}`}>
-        {" "}
         <p>{name}</p>
         <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`} />
         <p>Id : {id}</p>

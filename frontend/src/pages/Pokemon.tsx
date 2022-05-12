@@ -15,7 +15,7 @@ async function fetchPokemon(id: string | undefined) {
 }
 
 export const Pokemon = () => {
-  const id = useParams()
+  const { id } = useParams()
   const [pokemon, updatePokemon] = React.useState<PokemonProps | null>(null)
   const [isLoading, setIsLoading] = React.useState(false)
   const [requestSFailed, setRequestFailed] = React.useState(false)
@@ -23,7 +23,7 @@ export const Pokemon = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
-      const pokemonData = await fetchPokemon(id.id)
+      const pokemonData = await fetchPokemon(id)
       setIsLoading(false)
       updatePokemon(pokemonData)
     }
@@ -32,7 +32,7 @@ export const Pokemon = () => {
       setIsLoading(false)
       setRequestFailed(true)
     })
-  }, [])
+  }, [id])
 
   if (isLoading) {
     return (
