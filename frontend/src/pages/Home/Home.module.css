@@ -21,3 +21,9 @@
   border-color: rgb(118, 118, 118);
   border-image: initial;
 }
+
+.loader {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+}
