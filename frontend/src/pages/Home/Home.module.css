@@ -15,6 +15,15 @@
   padding: 10px;
 }
 
+.error {
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
 .input {
   border-width: 2px;
   border-style: inset;

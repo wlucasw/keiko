@@ -16,34 +16,46 @@ async function fetchPokemons() {
 
 export const Home = () => {
   const [pokemonList, updatePokemonList] = React.useState<PokemonProps[]>([])
-  const isLoading = useRef(true)
+  const [isLoading, updateIsLoading] = React.useState(true)
+  const [requestSuccess, updateRequestSuccess] = React.useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       const pokemonData = await fetchPokemons()
-      isLoading.current = false
+      updateIsLoading(false)
       updatePokemonList(pokemonData)
     }
-    fetchData()
+
+    fetchData().catch(() => {
+      updateRequestSuccess(false)
+    })
   }, [])
 
   return (
     <div>
-      {isLoading.current ? (
-        <div className={styles.loader}>
-          <Loader />
+      {requestSuccess ? (
+        <div>
+          {isLoading ? (
+            <div className={styles.loader}>
+              <Loader />
+            </div>
+          ) : (
+            <div>
+              <div className={styles.title}>
+                <div>Pokedex</div>
+              </div>
+
+              <div className={styles.cardBoard}>
+                {pokemonList.map(({ name, id, height, weight }) => {
+                  return <Pokemon name={name} id={id} height={height} weight={weight} key={id} />
+                })}
+              </div>
+            </div>
+          )}
         </div>
       ) : (
-        <div>
-          <div className={styles.title}>
-            <div>Pokedex</div>
-          </div>
-
-          <div className={styles.cardBoard}>
-            {pokemonList.map(({ name, id, height, weight }) => {
-              return <Pokemon name={name} id={id} height={height} weight={weight} key={id} />
-            })}
-          </div>
+        <div className={styles.error}>
+          <p>Echec du chargement des données</p>
         </div>
       )}
     </div>
