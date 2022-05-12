@@ -4,18 +4,30 @@ import { Props as PokemonProps } from "../../components/Pokemon"
 import styles from "./Home.module.css"
 import stylesLoader from "../../components/Loader/Loader.module.css"
 import { Loader } from "../../components/Loader"
+import { Link, useParams } from "react-router-dom"
 
 function filterPokemonsByName(pokemons: PokemonProps[], name: string) {
   return pokemons.filter(pokemon => pokemon.name.toUpperCase().includes(name.toUpperCase()))
 }
 
-async function fetchPokemons() {
-  const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
+async function fetchPokemons(pageId: string | undefined) {
+  const response = await fetch(`http://localhost:8000/pokemons?page=${Number(pageId) - 1}`, {
+    headers: { accept: "application/json" },
+  })
   const pokemonData = response.json()
   return pokemonData
 }
 
+const nextPage = (pageId: string | undefined) => {
+  return Number(pageId) + 1
+}
+
+const previousPage = (pageId: string | undefined) => {
+  return Math.max(Number(pageId) - 1, 1)
+}
+
 export const Home = () => {
+  const { page } = useParams()
   const [pokemonList, updatePokemonList] = React.useState<PokemonProps[]>([])
   const [isLoading, setIsLoading] = React.useState(false)
   const [requestFailed, setRequestFailed] = React.useState(false)
@@ -23,7 +35,7 @@ export const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
-      const pokemonData = await fetchPokemons()
+      const pokemonData = await fetchPokemons(page)
       setIsLoading(false)
       updatePokemonList(pokemonData)
     }
@@ -32,7 +44,7 @@ export const Home = () => {
       setIsLoading(false)
       setRequestFailed(true)
     })
-  }, [])
+  }, [page])
 
   if (isLoading) {
     return (
@@ -49,10 +61,16 @@ export const Home = () => {
       </div>
     )
   }
+
   return (
     <div>
       <div className={styles.title}>
         <div>Pokedex</div>
+      </div>
+
+      <div className={styles.arrow}>
+        {Number(page) > 1 ? <Link to={`/pokedex/${previousPage(page)}`}> &larr;</Link> : <div> </div>}
+        {Number(page) < 11 ? <Link to={`/pokedex/${nextPage(page)}`}> &rarr;</Link> : <div> </div>}
       </div>
 
       <div className={styles.cardBoard}>
