@@ -1,0 +1,23 @@
+.title {
+  font-size: 35px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.description {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  height: 150px;
+}

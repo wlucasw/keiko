@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect } from "react"
 import { Pokemon } from "../../components/Pokemon"
 import { Props as PokemonProps } from "../../components/Pokemon"
 import styles from "./Home.module.css"
+import stylesLoader from "../../components/Loader/Loader.module.css"
 import { Loader } from "../../components/Loader"
 
 function filterPokemonsByName(pokemons: PokemonProps[], name: string) {
@@ -16,48 +17,49 @@ async function fetchPokemons() {
 
 export const Home = () => {
   const [pokemonList, updatePokemonList] = React.useState<PokemonProps[]>([])
-  const [isLoading, updateIsLoading] = React.useState(true)
-  const [requestSuccess, updateRequestSuccess] = React.useState(true)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [requestFailed, setRequestFailed] = React.useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true)
       const pokemonData = await fetchPokemons()
-      updateIsLoading(false)
+      setIsLoading(false)
       updatePokemonList(pokemonData)
     }
 
     fetchData().catch(() => {
-      updateRequestSuccess(false)
+      setIsLoading(false)
+      setRequestFailed(true)
     })
   }, [])
 
+  if (isLoading) {
+    return (
+      <div className={stylesLoader.loader}>
+        <Loader />
+      </div>
+    )
+  }
+
+  if (requestFailed) {
+    return (
+      <div className={stylesLoader.error}>
+        <p>Echec du chargement des données</p>
+      </div>
+    )
+  }
   return (
     <div>
-      {requestSuccess ? (
-        <div>
-          {isLoading ? (
-            <div className={styles.loader}>
-              <Loader />
-            </div>
-          ) : (
-            <div>
-              <div className={styles.title}>
-                <div>Pokedex</div>
-              </div>
+      <div className={styles.title}>
+        <div>Pokedex</div>
+      </div>
 
-              <div className={styles.cardBoard}>
-                {pokemonList.map(({ name, id, height, weight }) => {
-                  return <Pokemon name={name} id={id} height={height} weight={weight} key={id} />
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className={styles.error}>
-          <p>Echec du chargement des données</p>
-        </div>
-      )}
+      <div className={styles.cardBoard}>
+        {pokemonList.map(({ name, id, height, weight }) => {
+          return <Pokemon name={name} id={id} height={height} weight={weight} key={id} />
+        })}
+      </div>
     </div>
   )
 }
