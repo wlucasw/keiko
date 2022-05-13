@@ -6,11 +6,13 @@ import stylesLoader from "../../components/Loader/Loader.module.css"
 import { Loader } from "../../components/Loader"
 import { Link, useParams } from "react-router-dom"
 
+const PAGE_MAX = 11
+
 function filterPokemonsByName(pokemons: PokemonProps[], name: string) {
   return pokemons.filter(pokemon => pokemon.name.toUpperCase().includes(name.toUpperCase()))
 }
 
-async function fetchPokemons(pageId: string | undefined) {
+async function fetchPokemons(pageId: string) {
   const response = await fetch(`http://localhost:8000/pokemons?page=${Number(pageId) - 1}`, {
     headers: { accept: "application/json" },
   })
@@ -18,12 +20,12 @@ async function fetchPokemons(pageId: string | undefined) {
   return pokemonData
 }
 
-const nextPage = (pageId: string | undefined) => {
+const nextPage = (pageId: string) => {
   return Number(pageId) + 1
 }
 
-const previousPage = (pageId: string | undefined) => {
-  return Math.max(Number(pageId) - 1, 1)
+const previousPage = (pageId: string) => {
+  return Number(pageId) - 1
 }
 
 export const Home = () => {
@@ -35,7 +37,7 @@ export const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
-      const pokemonData = await fetchPokemons(page)
+      const pokemonData = await fetchPokemons(String(page))
       setIsLoading(false)
       updatePokemonList(pokemonData)
     }
@@ -69,8 +71,8 @@ export const Home = () => {
       </div>
 
       <div className={styles.arrow}>
-        {Number(page) > 1 ? <Link to={`/pokedex/${previousPage(page)}`}> &larr;</Link> : <div> </div>}
-        {Number(page) < 11 ? <Link to={`/pokedex/${nextPage(page)}`}> &rarr;</Link> : <div> </div>}
+        {Number(page) > 1 ? <Link to={`/pokedex/${previousPage(String(page))}`}> &larr;</Link> : <div> </div>}
+        {Number(page) < PAGE_MAX ? <Link to={`/pokedex/${nextPage(String(page))}`}> &rarr;</Link> : <div> </div>}
       </div>
 
       <div className={styles.cardBoard}>
